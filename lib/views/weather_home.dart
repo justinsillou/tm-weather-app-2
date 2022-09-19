@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:weather_app_2/models/weather_data.dart';
 import 'package:weather_app_2/models/weather_day.dart';
-import 'package:weather_app_2/utils/utils.dart';
 import 'package:weather_app_2/views/current_weather_widget.dart';
 import 'package:weather_app_2/views/day_weather_widget.dart';
 import 'package:weather_app_2/views/loading_widget.dart';
@@ -16,6 +16,7 @@ class WeatherHome extends StatefulWidget {
 
 class _WeatherHomeState extends State<WeatherHome> {
   WeatherData? _weatherData;
+  DateTime? _refreshDate;
 
   _fetchWeatherData() async {
     var response = await Dio().get(
@@ -39,6 +40,7 @@ class _WeatherHomeState extends State<WeatherHome> {
 
     setState(() {
       _weatherData = WeatherData.fromJson(response.data);
+      _refreshDate = DateTime.now();
     });
   }
 
@@ -57,6 +59,21 @@ class _WeatherHomeState extends State<WeatherHome> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Météo'),
+        actions: [
+          IconButton(
+            onPressed: () async {
+              await _fetchWeatherData();
+              ScaffoldMessenger.of(context).removeCurrentSnackBar();
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Données mises à jour'),
+                  behavior: SnackBarBehavior.floating,
+                ),
+              );
+            },
+            icon: const Icon(Icons.refresh),
+          )
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -86,7 +103,12 @@ class _WeatherHomeState extends State<WeatherHome> {
                   }
                 },
               ),
-            )
+            ),
+            if (_refreshDate != null)
+              Text(
+                "Données mises à jour le ${DateFormat.yMd().format(_refreshDate!)} à ${DateFormat.Hms().format(_refreshDate!)}",
+                textAlign: TextAlign.center,
+              ),
           ],
         ),
       ),
