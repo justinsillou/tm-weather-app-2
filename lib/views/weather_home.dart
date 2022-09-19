@@ -22,8 +22,8 @@ class _WeatherHomeState extends State<WeatherHome> {
     var response = await Dio().get(
       "https://api.open-meteo.com/v1/forecast",
       queryParameters: {
-        'latitude': 52.52,
-        'longitude': 13.41,
+        'latitude': 50.630116,
+        'longitude': 3.0138868,
         'current_weather': true,
         'daily': [
           'weathercode',
@@ -99,7 +99,7 @@ class _WeatherHomeState extends State<WeatherHome> {
                   if (weatherDay != null) {
                     return DayWeatherWidget(weatherDay: weatherDay);
                   } else {
-                    return Container();
+                    return const Placeholder();
                   }
                 },
               ),
