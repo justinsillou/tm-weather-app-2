@@ -39,6 +39,7 @@ dependencies:
   dio:
   json_annotation: 
   intl:
+  jiffy:
 
 dev_dependencies:
   flutter_test:

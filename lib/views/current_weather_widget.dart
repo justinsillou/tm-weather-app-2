@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:weather_app_2/models/weather_current.dart';
 import 'package:weather_app_2/utils/utils.dart';
 
@@ -22,6 +20,10 @@ class CurrentWeatherWidget extends StatelessWidget {
         ),
         Text(
           "Temperature: ${_weatherCurrent.temperature}°C",
+          textAlign: TextAlign.center,
+        ),
+        Text(
+          "Wind speed: ${_weatherCurrent.windSpeed} m/s",
           textAlign: TextAlign.center,
         ),
       ],
