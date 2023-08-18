@@ -36,6 +36,8 @@ class WeatherDaily {
     this.sunset,
   });
 
+  int get length => time.length;
+
   WeatherDay? getDay({required int index}) {
     if (index < 0 || index >= time.length) {
       return null;

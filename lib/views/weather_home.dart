@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -23,8 +25,8 @@ class _WeatherHomeState extends State<WeatherHome> {
     var response = await Dio().get(
       "https://api.open-meteo.com/v1/forecast",
       queryParameters: {
-        'latitude': 52.52,
-        'longitude': 13.41,
+        'latitude': 50.630116,
+        'longitude': 3.0138868,
         'current_weather': true,
         'daily': [
           'weathercode',
@@ -36,8 +38,9 @@ class _WeatherHomeState extends State<WeatherHome> {
           'sunset'
         ],
         'timezone': 'Europe/Paris',
-        'start_date': Jiffy().startOf(Units.MONTH).format('yyyy-MM-dd'),
-        'end_date': Jiffy().add(days: 7).format('yyyy-MM-dd'),
+        'start_date':
+            Jiffy.now().startOf(Unit.month).format(pattern: 'yyyy-MM-dd'),
+        'end_date': Jiffy.now().add(days: 7).format(pattern: 'yyyy-MM-dd'),
       },
     );
 
@@ -95,7 +98,7 @@ class _WeatherHomeState extends State<WeatherHome> {
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
                 ),
-                itemCount: _weatherData!.daily!.time.length,
+                itemCount: _weatherData!.daily!.length,
                 itemBuilder: (context, index) {
                   WeatherDay? weatherDay =
                       _weatherData!.daily?.getDay(index: index);

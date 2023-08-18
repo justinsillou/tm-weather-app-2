@@ -4,6 +4,7 @@ import 'package:weather_app_2/utils/utils.dart';
 
 class CurrentWeatherWidget extends StatelessWidget {
   final WeatherCurrent _weatherCurrent;
+
   const CurrentWeatherWidget(
       {super.key, required WeatherCurrent weatherCurrent})
       : _weatherCurrent = weatherCurrent;
@@ -14,9 +15,11 @@ class CurrentWeatherWidget extends StatelessWidget {
       children: [
         SizedBox(
           height: 150,
-          child: Image.asset(Utils.weatherCodeToImage(
-            _weatherCurrent.weatherCode,
-          )),
+          child: Image.asset(
+            Utils.weatherCodeToImage(
+              _weatherCurrent.weatherCode,
+            ),
+          ),
         ),
         Text(
           "Temperature: ${_weatherCurrent.temperature}°C",
@@ -24,6 +27,10 @@ class CurrentWeatherWidget extends StatelessWidget {
         ),
         Text(
           "Wind speed: ${_weatherCurrent.windSpeed} m/s",
+          textAlign: TextAlign.center,
+        ),
+        Text(
+          "Wind direction: ${_weatherCurrent.windDirection}°",
           textAlign: TextAlign.center,
         ),
       ],
