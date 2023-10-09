@@ -12,7 +12,7 @@ import 'package:weather_app_2/views/day_weather_widget.dart';
 import 'package:weather_app_2/views/loading_widget.dart';
 
 class WeatherHome extends StatefulWidget {
-  const WeatherHome({super.key, required Weather weather});
+  const WeatherHome({super.key, required WeatherHome weather});
 
   @override
   State<WeatherHome> createState() => _WeatherHomeState();

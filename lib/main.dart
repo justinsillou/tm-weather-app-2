@@ -43,16 +43,14 @@ class WeatherSelectScreen extends StatefulWidget {
 }
 
 class _WeatherSelectScreenState extends State<WeatherSelectScreen> {
-  WeatherState state = WeatherInitial();
+  WeatherState state = WeatherInitialState();
   // display view depending on the state of the cubit
   @override
   Widget build(BuildContext context) {
-    if (state is WeatherInitial) {
+    if (state is WeatherInitialState) {
       return const InitialStateWidget();
-    } else if (state is WeatherLoading) {
+    } else if (state is WeatherLoadingState) {
       return const LoadingWidget();
-    } else if (state is WeatherLoaded) {
-      return WeatherHome(weather: (state as WeatherLoaded).weather);
     } else {
       return const InitialStateWidget();
     }
