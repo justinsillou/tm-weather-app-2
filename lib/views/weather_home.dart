@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:jiffy/jiffy.dart';
+import 'package:weather_app_2/cubit/weather_cubit.dart';
 import 'package:weather_app_2/models/weather_data.dart';
 import 'package:weather_app_2/models/weather_day.dart';
 import 'package:weather_app_2/views/current_weather_widget.dart';
@@ -11,7 +12,7 @@ import 'package:weather_app_2/views/day_weather_widget.dart';
 import 'package:weather_app_2/views/loading_widget.dart';
 
 class WeatherHome extends StatefulWidget {
-  const WeatherHome({super.key});
+  const WeatherHome({super.key, required Weather weather});
 
   @override
   State<WeatherHome> createState() => _WeatherHomeState();
@@ -38,8 +39,7 @@ class _WeatherHomeState extends State<WeatherHome> {
           'sunset'
         ],
         'timezone': 'Europe/Paris',
-        'start_date':
-            Jiffy.now().startOf(Unit.month).format(pattern: 'yyyy-MM-dd'),
+        'start_date': Jiffy.now().startOf(Unit.month).format(pattern: 'yyyy-MM-dd'),
         'end_date': Jiffy.now().add(days: 7).format(pattern: 'yyyy-MM-dd'),
       },
     );
@@ -100,8 +100,7 @@ class _WeatherHomeState extends State<WeatherHome> {
                 ),
                 itemCount: _weatherData!.daily!.length,
                 itemBuilder: (context, index) {
-                  WeatherDay? weatherDay =
-                      _weatherData!.daily?.getDay(index: index);
+                  WeatherDay? weatherDay = _weatherData!.daily?.getDay(index: index);
                   if (weatherDay != null) {
                     return DayWeatherWidget(weatherDay: weatherDay);
                   } else {

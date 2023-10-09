@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/intl_standalone.dart';
+import 'package:weather_app_2/cubit/weather_cubit.dart';
+import 'package:weather_app_2/views/initial_state_widget.dart';
+import 'package:weather_app_2/views/loading_widget.dart';
 import 'package:weather_app_2/views/weather_home.dart';
 
 void main() async {
@@ -27,7 +30,31 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       locale: const Locale('fr', 'FR'),
-      home: const WeatherHome(),
+      home: const WeatherSelectScreen(),
     );
+  }
+}
+
+class WeatherSelectScreen extends StatefulWidget {
+  const WeatherSelectScreen({super.key});
+
+  @override
+  State<WeatherSelectScreen> createState() => _WeatherSelectScreenState();
+}
+
+class _WeatherSelectScreenState extends State<WeatherSelectScreen> {
+  WeatherState state = WeatherInitial();
+  // display view depending on the state of the cubit
+  @override
+  Widget build(BuildContext context) {
+    if (state is WeatherInitial) {
+      return const InitialStateWidget();
+    } else if (state is WeatherLoading) {
+      return const LoadingWidget();
+    } else if (state is WeatherLoaded) {
+      return WeatherHome(weather: (state as WeatherLoaded).weather);
+    } else {
+      return const InitialStateWidget();
+    }
   }
 }
